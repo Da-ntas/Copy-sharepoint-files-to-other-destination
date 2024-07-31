@@ -7,6 +7,7 @@ import logs_router from './logs/index.js';
 const router = express.Router();
 
 router.use('/sites', sitesRouter);
+router.use('/files', filesRouter);
 
 router.use('/file', filesRouter);
 
