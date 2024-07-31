@@ -27,6 +27,10 @@ function getCachedData(key) {
 }
 
 async function middleware(req, res, next) {
+    console.log("================");
+    console.log("HORA DA REQUISICAO: ", new Date());
+    console.log("NOVA REQUISIÇÃO PATH: ", req.path);
+    console.log("================");
     if(!endpointToken) {
         return res.status(400).send('Endpoint não definido');
     }
@@ -58,6 +62,27 @@ async function middleware(req, res, next) {
     next();
 }
 
+// Middleware de logging
+function logRequest(req, res, next) {
+    const startHrTime = process.hrtime();
+
+    res.on('finish', () => {
+        const elapsedHrTime = process.hrtime(startHrTime);
+        const elapsedTimeInMs = elapsedHrTime[0] * 1000 + elapsedHrTime[1] / 1e6;
+
+        const elapsedTimeInMsFixed = `${elapsedTimeInMs.toFixed(3)}ms`;
+        console.log("================");
+        console.log("FIM REQUISIÇÃO:");
+        console.log("PATH: ", req.path);
+        console.log("STATUS: ", res.statusCode);
+        console.log("Duração: ", elapsedTimeInMsFixed);
+        console.log("================");
+    });
+
+    next();
+};
+
 export {
-    middleware
+    middleware, 
+    logRequest
 }
