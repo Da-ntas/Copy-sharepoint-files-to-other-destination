@@ -6,20 +6,20 @@ export async function downloadFile(response, filePath) {
         filePath = filePath.replaceAll("\\", "/")
         response.data.pipe(fs.createWriteStream(filePath))
           .on('finish', () => {
-            console.log(`Arquivo salvo em: ${filePath}`);
+            // console.log(`Arquivo salvo em: ${filePath}`);
             return true;
           })
           .on('error', (error) => {
-            console.error('Erro ao salvar o arquivo', error);
+            // console.error('Erro ao salvar o arquivo', error);
             return false;
           });
         return true;
       } else {
-        console.error('A resposta não é um stream de dados.');
+        // console.error('A resposta não é um stream de dados.');
         return false;
       }
     } catch (error) {
-      console.error('Erro na requisição', error);
+      // console.error('Erro na requisição', error);
       return false;
     }
 }

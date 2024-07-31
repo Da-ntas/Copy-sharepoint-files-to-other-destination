@@ -49,7 +49,7 @@ moveRouter.post('/list', async (req, res) => {
         }
 
         // Processar os itens e atualizar o status na tabela de logs
-        for (let item of list.slice(0, 50)) {
+        for (let item of list) {
             const { error, value } = itemSchema.validate(item);
             let status = 'sucesso';
             let errorMessage = '';
